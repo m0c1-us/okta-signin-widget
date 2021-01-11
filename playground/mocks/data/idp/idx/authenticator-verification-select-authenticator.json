@@ -242,7 +242,7 @@
                     ]
                   }
                 },
-                "relatesTo": "$.authenticatorEnrollments.value[9]"
+                "relatesTo": "$.authenticatorEnrollments.value[8]"
               }
             ]
           },

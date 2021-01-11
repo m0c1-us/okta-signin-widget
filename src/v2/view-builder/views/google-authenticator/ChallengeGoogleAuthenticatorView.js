@@ -11,6 +11,10 @@ const Body = BaseForm.extend(Object.assign(
       return loc('oie.google_authenticator.totp.title', 'login');
     },
 
+    subtitle () {
+      return loc('oie.google_authenticator.totp.enterCodeText', 'login');
+    },
+
     save () {
       return loc('mfa.challenge.verify', 'login');
     },

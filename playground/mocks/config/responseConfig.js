@@ -91,7 +91,6 @@ const idx = {
     // 'factor-verification-email',
     // 'error-answer-passcode-invalid'
     //'error-authenticator-enroll-security-question'
-    'authenticator-verification-google-authenticator-answer'
   ],
   '/idp/idx/challenge/send': [
     //'factor-verification-email',
