@@ -61,6 +61,9 @@ import ChallengeOktaVerifyResendPushView from './views/ov/ChallengeOktaVerifyRes
 import ChallengeAuthenticatorDataOktaVerifyView from './views/ov/ChallengeAuthenticatorDataOktaVerifyView';
 import ChallengeOktaVerifySSOExtensionView from './views/ov/ChallengeOktaVerifySSOExtensionView';
 
+// app2(google authenticator)
+import ChallengeGoogleAuthenticatorView from './views/google-authenticator/ChallengeGoogleAuthenticatorView';
+
 // safe mode poll view
 import PollView from './views/PollView';
 
@@ -152,6 +155,7 @@ const VIEWS_MAPPING = {
     'security_question': ChallengeAuthenticatorSecurityQuestion,
     phone: ChallengeAuthenticatorPhoneView,
     app: ChallengeOktaVerifyTotpView,
+    app2: ChallengeGoogleAuthenticatorView,
   },
   [RemediationForms.CHALLENGE_POLL]: {
     app: ChallengeOktaVerifyView,
