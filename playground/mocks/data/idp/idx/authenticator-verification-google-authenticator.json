@@ -94,9 +94,10 @@
   "currentAuthenticator": {
     "type": "object",
     "value": {
-      "type": "app2",
-      "id": "aut11ceMaP0B0EzMI0g4",
       "displayName": "Google Authenticator",
+      "key": "google-authenticator",
+      "type": "app",
+      "id": "aut11ceMaP0B0EzMI0g4",
       "methods": [
         {
           "type": "otp"
@@ -108,9 +109,10 @@
     "type": "array",
     "value": [
       {
-        "type": "app2",
-        "id": "aut11ceMaP0B0EzMI0g4",
         "displayName": "Google Authenticator",
+        "key": "google-authenticator",
+        "type": "app",
+        "id": "aut11ceMaP0B0EzMI0g4",
         "methods": [
           {
             "type": "otp"
@@ -124,7 +126,8 @@
     "value": [
       {
         "displayName": "Google Authenticator",
-        "type": "app2",
+        "key": "google-authenticator",
+        "type": "app",
         "id": "uft14qoSHV31dpdrO0g4",
         "methods": [
           {

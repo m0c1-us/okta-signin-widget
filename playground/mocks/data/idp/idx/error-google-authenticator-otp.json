@@ -138,11 +138,12 @@
   "currentAuthenticator":{
     "type":"object",
     "value":{
+      "displayName": "Google Authenticator",
+      "key": "google-authenticator",
       "type": "app",
       "id": "auttheidkwh282hv8g3",
-      "displayName": "",
       "methods": [
-        { "type": "totp" }
+        { "type": "otp" }
       ]
     }
   },
@@ -172,6 +173,17 @@
         "methods": [
           {
             "type": "password"
+          }
+        ]
+      },
+      {
+        "displayName": "Google Authenticator",
+        "key": "google-authenticator",
+        "type": "app",
+        "id": "auttheidkwh282hv8g3",
+        "methods": [
+          {
+            "type": "otp"
           }
         ]
       }
@@ -210,6 +222,18 @@
         "methods": [
           {
             "type": "password"
+          }
+        ]
+      },
+      {
+        "displayName": "Google Authenticator",
+        "key": "google-authenticator",
+        "type": "app",
+        "id": "auttheidkwh282hv8g3",
+        "authenticatorId": "aidwboITrg4b4yAYd0g4",
+        "methods": [
+          {
+            "type": "otp"
           }
         ]
       }

@@ -4,7 +4,7 @@ const idx = {
   // ===== IDX
 
   '/idp/idx/introspect': [
-    //'identify',
+    'identify',
     // 'error-403-security-access-denied',
     // 'authenticator-enroll-email',
     // 'error-internal-server-error',
@@ -27,7 +27,7 @@ const idx = {
     // 'authenticator-verification-phone-sms',
     // 'authenticator-verification-phone-voice',
     // 'authenticator-verification-security-question',
-    'authenticator-verification-select-authenticator',
+    // 'authenticator-verification-select-authenticator',
     // 'authenticator-verification-select-authenticator-ov-m2',
     // 'authenticator-verification-webauthn',
     // 'authenticator-reset-password',
@@ -109,11 +109,11 @@ const idx = {
     // 'authenticator-verification-okta-verify-push',
   ],
   '/idp/idx/challenge': [
-    'authenticator-verification-google-authenticator',
-    //'authenticator-verification-webauthn',
+    'authenticator-verification-webauthn',
     // 'authenticator-verification-password',
     // 'authenticator-verification-okta-verify-totp',
     // 'authenticator-verification-okta-verify-push',
+    // 'authenticator-verification-google-authenticator',
     // 'factor-verification-password',
     // 'factor-verification-email',
   ],

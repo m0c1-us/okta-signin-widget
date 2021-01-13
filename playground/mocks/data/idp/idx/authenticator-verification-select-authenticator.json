@@ -340,7 +340,8 @@
       },
       {
         "displayName": "Google Authenticator",
-        "type": "app2",
+        "key": "google-authenticator",
+        "type": "app",
         "id": "aen1mz5J4cuNoaR3l0g3",
         "authenticatorId": "aut11ceMaP0B0EzMI0g4",
         "methods": [
