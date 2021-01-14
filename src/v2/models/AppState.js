@@ -13,7 +13,7 @@
 import { _, Model } from 'okta';
 import Logger from 'util/Logger';
 import { FORMS_WITHOUT_SIGNOUT, FORMS_WITH_STATIC_BACK_LINK,
-  FORMS_FOR_VERIFICATION } from '../ion/RemediationConstants';
+  FORMS_FOR_VERIFICATION, FactorTypeToAuthenticatorKeyMap } from '../ion/RemediationConstants';
 
 /**
  * Keep track of stateMachine with this special model. Similar to `src/models/AppState.js`
@@ -50,6 +50,15 @@ export default Model.extend({
         return currentAuthenticator.type
           || currentAuthenticatorEnrollment.type
           || factor.factorType
+          || '';
+      },
+    },
+    authenticatorKey: {
+      deps: ['currentAuthenticator', 'currentAuthenticatorEnrollment', 'factor'],
+      fn (currentAuthenticator = {}, currentAuthenticatorEnrollment = {}, factor = {}) {
+        return currentAuthenticator.key
+          || currentAuthenticatorEnrollment.key
+          || FactorTypeToAuthenticatorKeyMap[factor.factorType]
           || '';
       },
     },

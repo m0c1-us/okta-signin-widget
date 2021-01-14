@@ -11,6 +11,7 @@
  */
 import { loc, _ } from 'okta';
 import FactorUtil from '../../../util/FactorUtil';
+import { FactorTypeToAuthenticatorKeyMap } from '../../ion/RemediationConstants';
 
 const { getPasswordComplexityDescription, getPasswordComplexityDescriptionForHtmlList } = FactorUtil;
 
@@ -25,11 +26,12 @@ const getButtonDataSeAttr = function (authenticator) {
 
 /* eslint complexity: [2, 19] */
 const getAuthenticatorData = function (authenticator, isVerifyAuthenticator) {
-  const authenticatorType = authenticator.authenticatorType || authenticator.factorType;
-  const key = _.isString(authenticatorType) ? authenticatorType.toLowerCase() : '';
+  // `factorType` metadata added by oin is not in appState, map them to authenticatorKey.
+  const authenticatorKey = authenticator.authenticatorKey || FactorTypeToAuthenticatorKeyMap[authenticator.factorType];
+  const key = _.isString(authenticatorKey) ? authenticatorKey.toLowerCase() : '';
   let authenticatorData = {};
   switch (key) {
-  case 'email':
+  case 'okta_email':
     Object.assign(authenticatorData, {
       description: isVerifyAuthenticator
         ? ''
@@ -39,7 +41,7 @@ const getAuthenticatorData = function (authenticator, isVerifyAuthenticator) {
     });
     break;
 
-  case 'password':
+  case 'okta_password':
     Object.assign(authenticatorData, {
       description: isVerifyAuthenticator
         ? ''
@@ -49,7 +51,7 @@ const getAuthenticatorData = function (authenticator, isVerifyAuthenticator) {
     });
     break;
 
-  case 'phone':
+  case 'phone_number':
     Object.assign(authenticatorData, {
       description: isVerifyAuthenticator
         ? authenticator.relatesTo?.profile?.phoneNumber
@@ -80,17 +82,7 @@ const getAuthenticatorData = function (authenticator, isVerifyAuthenticator) {
     });
     break;
 
-  case 'security_key':
-    Object.assign(authenticatorData, {
-      description: isVerifyAuthenticator
-        ? ''
-        : loc('oie.webauthn.description', 'login'),
-      iconClassName: 'mfa-webauthn',
-      buttonDataSeAttr: getButtonDataSeAttr(authenticator),
-    });
-    break;
-
-  case 'app':
+  case 'okta_verify':
     Object.assign(authenticatorData, {
       description: isVerifyAuthenticator
         ? ''
@@ -112,8 +104,8 @@ export function getAuthenticatorDataForVerification (authenticator) {
   return getAuthenticatorData(authenticator, true);
 }
 
-export function getIconClassNameForBeacon (authenticatorType) {
-  return getAuthenticatorData({ authenticatorType }).iconClassName;
+export function getIconClassNameForBeacon (authenticatorKey) {
+  return getAuthenticatorData({ authenticatorKey }).iconClassName;
 }
 
 export function removeRequirementsFromError (errorJSON, policy) {

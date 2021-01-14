@@ -76,9 +76,20 @@ const FORMS_FOR_VERIFICATION = [
   FORMS.RESEND
 ];
 
+const FactorTypeToAuthenticatorKeyMap = {
+  email: 'okta_email',
+  password: 'okta_password',
+  phone: 'phone_number',
+  'security_key': 'webauthn',
+  webauthn: 'webauthn',
+  'security_question': 'security_question',
+  app: 'okta_verify',
+};
+
 export {
   FORMS,
   FORMS_WITHOUT_SIGNOUT,
   FORMS_WITH_STATIC_BACK_LINK,
-  FORMS_FOR_VERIFICATION
+  FORMS_FOR_VERIFICATION,
+  FactorTypeToAuthenticatorKeyMap
 };
