@@ -5,7 +5,9 @@ export default View.extend({
   className: 'oie-enroll-google-authenticator-barcode',
   template: hbs`
       {{#if href}}
-      <div class="google-authenticator-setup-info-title barcode-setup-title">{{i18n code="oie.enroll.google_authenticator.scanBarcode.title" bundle="login"}}</div>
+      <div class="google-authenticator-setup-info-title barcode-setup-title">
+        {{i18n code="oie.enroll.google_authenticator.scanBarcode.title" bundle="login"}}
+      </div>
       <div class="qrcode-info-container">
         <p class="google-authenticator-setup-info">
           {{i18n code="oie.enroll.google_authenticator.scanBarcode.description" bundle="login"}}
@@ -25,10 +27,10 @@ export default View.extend({
     return { href: contextualData.qrcode?.href };
   },
 
-  postRender () {
-    this.$el.find('.cannot-scan-link').on('click', (event) => {
-      event.preventDefault();
-      this.options.model.trigger('triggerBarcodeView');
-    });
+  events: {
+    'click .cannot-scan-link': function (e) {
+      e.preventDefault();
+      this.options.model.set('viewToDisplay', 'manual');
+    }
   },
 });

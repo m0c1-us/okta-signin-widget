@@ -61,7 +61,7 @@ test
     await enrollGoogleAuthenticatorPageObject.goToNextPage();
 
     await enrollGoogleAuthenticatorPageObject.enterCode('123456');
-    await enrollGoogleAuthenticatorPageObject.form.clickSaveButton();
+    await enrollGoogleAuthenticatorPageObject.submit();
 
     await t.expect(enrollGoogleAuthenticatorPageObject.form.getErrorBoxText()).eql('Authentication failed');
   });
@@ -77,7 +77,7 @@ test
     await enrollGoogleAuthenticatorPageObject.goToNextPage();
 
     await enrollGoogleAuthenticatorPageObject.enterCode('123456');
-    await enrollGoogleAuthenticatorPageObject.form.clickSaveButton();
+    await enrollGoogleAuthenticatorPageObject.submit();
 
     await t.expect(enrollGoogleAuthenticatorPageObject.form.getErrorBoxText()).eql('Authentication failed');
   });
@@ -92,7 +92,7 @@ test
     await enrollGoogleAuthenticatorPageObject.goToNextPage();
 
     await enrollGoogleAuthenticatorPageObject.enterCode('123456');
-    await enrollGoogleAuthenticatorPageObject.form.clickSaveButton();
+    await enrollGoogleAuthenticatorPageObject.submit();
 
     const successPage = new SuccessPageObject(t);
     const pageUrl = await successPage.getPageUrl();
@@ -111,7 +111,7 @@ test
     await enrollGoogleAuthenticatorPageObject.goToNextPage();
 
     await enrollGoogleAuthenticatorPageObject.enterCode('123456');
-    await enrollGoogleAuthenticatorPageObject.form.clickSaveButton();
+    await enrollGoogleAuthenticatorPageObject.submit();
 
     const successPage = new SuccessPageObject(t);
     const pageUrl = await successPage.getPageUrl();

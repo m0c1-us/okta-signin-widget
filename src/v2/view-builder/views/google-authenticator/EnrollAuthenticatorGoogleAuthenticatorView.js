@@ -1,94 +1,105 @@
-import { loc, createButton } from 'okta';
+import { loc, View } from 'okta';
+import hbs from 'handlebars-inline-precompile';
 import BaseForm from '../../internals/BaseForm';
+import BaseView from '../../internals/BaseView';
 import BaseAuthenticatorView from '../../components/BaseAuthenticatorView';
 import AuthenticatorEnrollFooter from '../../components/AuthenticatorEnrollFooter';
 import EnrollGoogleAuthenticatorBarcodeView from './EnrollGoogleAuthenticatorBarcodeView';
 import EnrollAuthenticatorManualSetupView from './EnrollAuthenticatorManualSetupView';
+import { addCustomButton } from '../../internals/FormInputFactory';
+
+const VIEW_TO_DISPLAY = 'viewToDisplay';
+const viewToDisplayState = {
+  BARCODE: 'barcode',
+  MANUAL: 'manual',
+  ENTER_CODE: 'enterCode',
+};
 
 const Body = BaseForm.extend({
   title () {
     return loc('oie.enroll.google_authenticator.setup.title', 'login');
   },
 
-  subtitle () {
-    return loc('oie.enroll.google_authenticator.enterCode.title', 'login');
-  },
-
-  save () {
-    return loc('mfa.challenge.verify', 'login');
-  },
+  noButtonBar: true,
 
   className: 'oie-enroll-google-authenticator',
 
-  modelEvents: {
-    'triggerBarcodeView': '_triggerBarcodeView'
-  },
-
-  _triggerBarcodeView () {
-    this.$('.oie-enroll-google-authenticator-barcode').hide();
-    this._showmanualSetupView();
-  },
-
-  _showVerifyCodePage () {
-    this.$('.oie-enroll-google-authenticator-barcode').hide();
-    this.$('.google-authenticator-next').hide();
-    this._hidemanualSetupView();
-    this.$('.o-form-label-top').show();
-    this.$('.o-form-button-bar [type="submit"]').show();
-  },
-
-  _hideVerifyCodePage () {
-    this.$('.o-form-label-top').hide();
-    this.$('.o-form-button-bar [type="submit"]').hide();
-    this.$('.okta-form-subtitle').hide();
-  },
-
-  _showmanualSetupView () {
-    this.$('.shared-secret').show();
-    this.$('.oie-enroll-google-authenticator-manual-setup').show();
-  },
-
-  _hidemanualSetupView () {
-    this.$('.shared-secret').hide();
-    this.$('.oie-enroll-google-authenticator-manual-setup').hide();
-  },
-
-  render () {
-    BaseForm.prototype.render.apply(this, arguments);
-    this.$('.oie-enroll-google-authenticator-manual-setup').hide();
-    this.$('.shared-secret').hide();
-    this._hideVerifyCodePage();
-  },
+  enterCodeSubtitle: View.extend({
+    template: hbs`
+      <div class="google-authenticator-setup-info-title enter-code-title">
+      {{i18n code="oie.enroll.google_authenticator.enterCode.title" bundle="login"}}
+      </div>
+    `,
+  }),
 
   getUISchema () {
     const schema = BaseForm.prototype.getUISchema.apply(this, arguments);
 
-    const nextButton = createButton({
-      className: 'google-authenticator-next button-primary default-custom-button',
+    const nextButton = addCustomButton({
+      className: 'google-authenticator-next',
       title: loc('oform.next', 'login'),
-      selector: '.o-form-button-bar',
+      attributes: {
+        style: 'display: block',
+      },
       click: () => {
-        this._showVerifyCodePage();
+        this.model.set(VIEW_TO_DISPLAY, viewToDisplayState.ENTER_CODE);
       }
     });
 
-    schema.push({
-      View: EnrollGoogleAuthenticatorBarcodeView,
-      selector: '.o-form-fieldset-container',
-    }, {
-      View: EnrollAuthenticatorManualSetupView,
-      selector: '.o-form-fieldset-container',
-    }, {
-      label: false,
-      className: 'shared-secret',
-      type: 'text',
-      placeholder: this.options.appState.get('currentAuthenticator').contextualData.sharedSecret,
-      disabled: true,
-    }, {
-      View: nextButton,
+    const verifyButton = addCustomButton({
+      className: 'google-authenticator-verify',
+      title: loc('oform.verify', 'login'),
+      click: () => {
+        this.$el.submit();
+      }
+    });
+
+    schema[0].showWhen = {
+      viewToDisplay: viewToDisplayState.ENTER_CODE,
+    };
+
+    // Add Enter Code Subtitle
+    schema.unshift({
+      View: this.enterCodeSubtitle,
       selector: '.o-form-fieldset-container',
     });
 
+    schema.push(
+      {
+        View: EnrollGoogleAuthenticatorBarcodeView,
+        selector: '.o-form-fieldset-container',
+        showWhen: {
+          viewToDisplay: viewToDisplayState.BARCODE,
+        }
+      }, {
+        View: EnrollAuthenticatorManualSetupView,
+        selector: '.o-form-fieldset-container',
+        showWhen: {
+          viewToDisplay: viewToDisplayState.MANUAL,
+        }
+      }, {
+        label: false,
+        className: 'shared-secret',
+        type: 'text',
+        placeholder: this.options.appState.get('currentAuthenticator').contextualData.sharedSecret,
+        disabled: true,
+        showWhen: {
+          viewToDisplay: viewToDisplayState.MANUAL,
+        }
+      },
+      {
+        View: nextButton,
+        showWhen: {
+          viewToDisplay: (val) => val === viewToDisplayState.BARCODE || val === viewToDisplayState.MANUAL,
+        }
+      },
+      {
+        View: verifyButton,
+        showWhen: {
+          viewToDisplay: (val) => val === viewToDisplayState.ENTER_CODE,
+        }
+      },
+    );
     return schema;
   },
 });
@@ -96,4 +107,21 @@ const Body = BaseForm.extend({
 export default BaseAuthenticatorView.extend({
   Body,
   Footer: AuthenticatorEnrollFooter,
+  createModelClass () {
+    const ModelClass = BaseView.prototype.createModelClass.apply(this, arguments);
+    const local = Object.assign(
+      {
+        viewToDisplay: {
+          value: 'barcode',
+          type: 'string',
+          required: true,
+          values: [viewToDisplayState.BARCODE, viewToDisplayState.MANUAL, viewToDisplayState.ENTER_CODE],
+        }
+      },
+      ModelClass.prototype.local,
+    );
+    return ModelClass.extend({
+      local,
+    });
+  },
 });

@@ -98,6 +98,7 @@
         "sharedSecret": "ZR74DHZTG43NBULV"
       },
       "type": "app",
+      "key": "okta_verify",
       "id": "aut11ceMaP0B0EzMI0g4",
       "displayName": "Google Authenticator",
       "methods": [
@@ -112,6 +113,7 @@
     "value": [
       {
         "type": "app",
+        "key": "okta_verify",
         "id": "aut11ceMaP0B0EzMI0g4",
         "displayName": "Google Authenticator",
         "methods": [
@@ -161,6 +163,7 @@
     "type": "object",
     "value": {
       "type": "app",
+      "key": "google_authenticator",
       "id": "aut11ceMaP0B0EzMI0g4",
       "displayName": "Google Authenticator",
       "methods": [

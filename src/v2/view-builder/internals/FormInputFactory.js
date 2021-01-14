@@ -1,4 +1,4 @@
-import { Collection, _, loc } from 'okta';
+import { Collection, _, loc, createButton } from 'okta';
 import FactorOptions from '../components/FactorOptions';
 import AuthenticatorEnrollOptions from '../components/AuthenticatorEnrollOptions';
 import AuthenticatorVerifyOptions from '../components/AuthenticatorVerifyOptions';
@@ -144,8 +144,16 @@ const createCustomButtons = (settings) => {
   });
 };
 
+const addCustomButton = (customButtonSettings) => {
+  return createButton({
+    ...customButtonSettings,
+    className: `${customButtonSettings.className} default-custom-button button-primary`,
+  });
+};
+
 module.exports = {
   create,
   createIdpButtons,
   createCustomButtons,
+  addCustomButton,
 };

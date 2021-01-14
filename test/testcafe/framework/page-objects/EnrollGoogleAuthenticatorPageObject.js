@@ -38,6 +38,10 @@ export default class EnrollGoogleAuthenticatorPageObject extends BasePageObject 
     await this.form.clickElement('.google-authenticator-next');
   }
 
+  async submit() {
+    await this.form.clickElement('.google-authenticator-verify');
+  }
+
   enterCode(value) {
     return this.form.setTextBoxValue(CODE_FIELD_NAME, value);
   }

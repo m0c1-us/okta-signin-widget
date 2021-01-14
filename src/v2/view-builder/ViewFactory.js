@@ -61,7 +61,8 @@ import ChallengeOktaVerifyResendPushView from './views/ov/ChallengeOktaVerifyRes
 import ChallengeAuthenticatorDataOktaVerifyView from './views/ov/ChallengeAuthenticatorDataOktaVerifyView';
 import ChallengeOktaVerifySSOExtensionView from './views/ov/ChallengeOktaVerifySSOExtensionView';
 
-// google
+// google authenticator
+// eslint-disable-next-line max-len
 import EnrollAuthenticatorGoogleAuthenticatorView from './views/google-authenticator/EnrollAuthenticatorGoogleAuthenticatorView';
 
 // safe mode poll view
