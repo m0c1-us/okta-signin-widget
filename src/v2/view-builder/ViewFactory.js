@@ -2,7 +2,7 @@ import Logger from 'util/Logger';
 import { FORMS as RemediationForms } from '../ion/RemediationConstants';
 import BaseView from './internals/BaseView';
 
-// factor ignostic views
+// authenticator ignostic views
 import IdentifierView from './views/IdentifierView';
 import TerminalView from './views/TerminalView';
 import SuccessView from './views/SuccessView';

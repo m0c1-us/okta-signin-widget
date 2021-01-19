@@ -51,8 +51,6 @@ const idx = {
     // 'identify-with-only-one-third-party-idp',
     //'identify-with-password',
     // 'identify-with-universal-link',
-    // 'select-factor-authenticate',
-    // 'select-factor-for-password-recovery',
     // 'success',
     // 'success-with-app-user',
     // 'terminal-return-email',
