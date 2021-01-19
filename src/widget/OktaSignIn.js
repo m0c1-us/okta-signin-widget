@@ -97,7 +97,8 @@ var OktaSignIn = (function () {
       const promise = render.call(this, renderOptions).then(res => {
         return res.tokens;
       });
-      if (OAuth2Util.isAuthorizationCodeFlow(router.settings)) {
+      const authClient = router.settings.getAuthClient();
+      if (authClient.isAuthorizationCodeFlow() && !authClient.isPKCE()) {
         throw new Errors.ConfigError('"showSignInToGetTokens()" should not be used for authorization_code flow. ' + 
           'Use "showSignInAndRedirect()" instead');
       }
@@ -150,7 +151,7 @@ var OktaSignIn = (function () {
       authParams.issuer = options.baseUrl + '/oauth2/default';
     }
 
-    var authClient = createAuthClient(authParams);
+    var authClient = options.authClient ? options.authClient : createAuthClient(authParams);
 
     var Router;
     if ((options.stateToken && !Util.isV1StateToken(options.stateToken)) 
